@@ -1,0 +1,19 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Docker Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login ,Build And Push 
+      run: |
+        docker login https://docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
+        docker build . -t docker.pkg.github.com/lord-of-the-craft/factorio/factorio-headless
+        docker push docker.pkg.github.com/lord-of-the-craft/factorio/factorio-headless
